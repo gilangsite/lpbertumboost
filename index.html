@@ -382,10 +382,13 @@
                 #22C55E 70%,
                 #4ADE80 100%);
             border-radius: 8px;
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                       background 0.6s ease, 
+                       box-shadow 0.6s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 2px 6px rgba(4, 98, 106, 0.3);
+            box-shadow: 0 2px 8px rgba(4, 98, 106, 0.4);
+            will-change: width;
         }
 
         .progress-bar-fill::after {
@@ -1019,13 +1022,13 @@
         <section id="target" class="section">
             <h2 class="section-title">Target Donasi</h2>
             <div class="donation-combined-card">
-                <div class="donation-collected" id="donation-collected" data-target="189640000" contenteditable="true" title="Klik untuk edit nilai donasi">Rp. 9.780.000</div>
+                <div class="donation-collected" id="donation-collected" data-target="189640000" title="Donasi terkumpul">Rp. 9.780.000</div>
                 <div class="donation-target" id="donation-target">Target: Rp. 189.640.000</div>
                 <div class="progress-container">
                     <div class="progress-bar-bg">
                         <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%"></div>
                     </div>
-                    <div class="progress-text" id="progress-text">10.42% terkumpul</div>
+                    <div class="progress-text" id="progress-text">0% terkumpul</div>
                     <div class="progress-stats">
                         <div class="progress-stat-item">
                             <div class="progress-stat-label">Tersimpan</div>
@@ -1090,7 +1093,7 @@
             <div class="volunteer-card">
                 <h3>Bergabung sebagai Relawan</h3>
                 <p>kami membuka kesempatan bagi kamu yang ingin terlibat langsung sebagai Relawan Pulih dan Bertumboost.</p>
-                <p>. Setiap relawan memiliki peran penting dalam menemani proses pulih dan bertumbuh bersama.</p>
+                <p>Setiap relawan memiliki peran penting dalam menemani proses pulih dan bertumbuh bersama.</p>
                 <p style="margin-top: 1.5rem; font-size: 0.95rem; color: #666;"></p>
                 <div class="btn-group">
                     <a href="http://bit.ly/RelawanPulih" target="_blank" class="btn btn-primary" style="text-align: center;">Daftar Relawan</a>
@@ -1132,8 +1135,11 @@
     </footer>
 
     <script>
-        // Enhanced Donation Progress Calculator with Automation
+        // Robust Donation Progress Calculator with Auto-Calculation
+        let updateTimeout;
+
         function formatCurrency(amount) {
+            if (isNaN(amount) || amount === 0) return 'Rp. 0';
             return new Intl.NumberFormat('id-ID', {
                 style: 'currency',
                 currency: 'IDR',
@@ -1143,144 +1149,150 @@
         }
 
         function parseAmount(text) {
+            if (!text) return 0;
             // Remove currency formatting and convert to number
-            return parseInt(text.replace(/[^\d]/g, ''));
+            const cleanText = text.replace(/[^\d]/g, '');
+            const number = parseInt(cleanText);
+            return isNaN(number) ? 0 : number;
         }
 
         function updateDonationProgress() {
-            const collectedElement = document.getElementById('donation-collected');
-            const targetElement = document.getElementById('donation-target');
-            const progressBar = document.getElementById('progress-bar-fill');
-            const progressText = document.getElementById('progress-text');
-            const collectedDisplay = document.getElementById('collected-display');
-            const targetDisplay = document.getElementById('target-display');
-            const remainingDisplay = document.getElementById('remaining-display');
+            try {
+                const collectedElement = document.getElementById('donation-collected');
+                const targetElement = document.getElementById('donation-target');
+                const progressBar = document.getElementById('progress-bar-fill');
+                const progressText = document.getElementById('progress-text');
+                const collectedDisplay = document.getElementById('collected-display');
+                const targetDisplay = document.getElementById('target-display');
+                const remainingDisplay = document.getElementById('remaining-display');
 
-            if (!collectedElement || !progressBar) return;
+                if (!collectedElement || !progressBar) {
+                    console.warn('Required elements not found');
+                    return;
+                }
 
-            // Extract target from data attribute
-            const targetAmount = parseInt(collectedElement.getAttribute('data-target')) || 189640000;
-            
-            // Extract collected amount from main element text content
-            const collectedAmount = parseAmount(collectedElement.textContent);
-            
-            // Calculate percentage and remaining
-            const percentage = (collectedAmount / targetAmount) * 100;
-            const remainingAmount = Math.max(0, targetAmount - collectedAmount);
-            const roundedPercentage = Math.round(percentage * 100) / 100; // Round to 2 decimal places
-            
-            // Update progress bar with smooth animation
-            if (progressBar && progressText) {
-                progressBar.style.width = '0%';
-                setTimeout(() => {
-                    progressBar.style.width = `${Math.min(roundedPercentage, 100)}%`;
-                }, 100);
+                // Extract target from data attribute
+                const targetAmount = parseInt(collectedElement.getAttribute('data-target')) || 189640000;
                 
-                progressText.textContent = `${roundedPercentage}% terkumpul`;
-            }
-
-            // Update all display elements to ensure consistency
-            if (collectedDisplay) {
-                collectedDisplay.textContent = formatCurrency(collectedAmount);
-            }
-            if (targetDisplay) {
-                targetDisplay.textContent = formatCurrency(targetAmount);
-            }
-            if (remainingDisplay) {
-                if (remainingAmount > 0) {
-                    remainingDisplay.textContent = formatCurrency(remainingAmount);
-                    remainingDisplay.style.color = '#04626a';
-                } else {
-                    remainingDisplay.textContent = 'Target Tercapai!';
-                    remainingDisplay.style.color = '#22863a';
+                // Extract collected amount from main element text content
+                const collectedAmount = parseAmount(collectedElement.textContent);
+                
+                // Ensure minimum values
+                const safeTarget = Math.max(targetAmount, 1);
+                const safeCollected = Math.max(collectedAmount, 0);
+                
+                // Calculate percentage and remaining with proper formulas
+                const percentage = (safeCollected / safeTarget) * 100;
+                const remainingAmount = Math.max(0, safeTarget - safeCollected);
+                const roundedPercentage = Math.min(Math.round(percentage * 100) / 100, 100);
+                
+                // Update progress bar with smooth animation
+                if (progressBar && progressText) {
+                    // Animate to new width
+                    progressBar.style.width = `${roundedPercentage}%`;
+                    progressText.textContent = `${roundedPercentage}% terkumpul`;
                 }
-            }
 
-            // Update target element if needed
-            if (targetElement && !targetElement.textContent.includes(formatCurrency(targetAmount))) {
-                targetElement.textContent = `Target: ${formatCurrency(targetAmount)}`;
-            }
-
-            // Add dynamic color changes based on progress
-            const progressBarFill = document.getElementById('progress-bar-fill');
-            if (progressBarFill) {
-                if (roundedPercentage >= 100) {
-                    progressBarFill.style.background = 'linear-gradient(90deg, #22863a 0%, #4ade80 100%)';
-                } else if (roundedPercentage >= 75) {
-                    progressBarFill.style.background = 'linear-gradient(90deg, #22c55e 0%, #4ade80 100%)';
-                } else if (roundedPercentage >= 50) {
-                    progressBarFill.style.background = 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)';
-                } else {
-                    progressBarFill.style.background = 'linear-gradient(90deg, #04626a 0%, #9BC4CB 30%, #22C55E 70%, #4ADE80 100%)';
+                // Update main donation collected display
+                if (collectedElement) {
+                    collectedElement.textContent = formatCurrency(safeCollected);
                 }
+
+                // Update all display elements to ensure consistency
+                if (collectedDisplay) {
+                    collectedDisplay.textContent = formatCurrency(safeCollected);
+                }
+                if (targetDisplay) {
+                    targetDisplay.textContent = formatCurrency(safeTarget);
+                }
+                if (remainingDisplay) {
+                    if (remainingAmount > 0) {
+                        remainingDisplay.textContent = formatCurrency(remainingAmount);
+                        remainingDisplay.style.color = '#04626a';
+                    } else {
+                        remainingDisplay.textContent = 'Target Tercapai!';
+                        remainingDisplay.style.color = '#22863a';
+                    }
+                }
+
+                // Update target element if needed
+                if (targetElement && !targetElement.textContent.includes(formatCurrency(safeTarget))) {
+                    targetElement.textContent = `Target: ${formatCurrency(safeTarget)}`;
+                }
+
+                // Add dynamic color changes based on progress
+                const progressBarFill = document.getElementById('progress-bar-fill');
+                if (progressBarFill) {
+                    if (roundedPercentage >= 100) {
+                        progressBarFill.style.background = 'linear-gradient(90deg, #22863a 0%, #4ade80 100%)';
+                    } else if (roundedPercentage >= 75) {
+                        progressBarFill.style.background = 'linear-gradient(90deg, #22c55e 0%, #4ade80 100%)';
+                    } else if (roundedPercentage >= 50) {
+                        progressBarFill.style.background = 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)';
+                    } else {
+                        progressBarFill.style.background = 'linear-gradient(90deg, #04626a 0%, #9BC4CB 30%, #22C55E 70%, #4ADE80 100%)';
+                    }
+                }
+
+                console.log('Donation Progress Updated:', {
+                    target: safeTarget,
+                    collected: safeCollected,
+                    percentage: roundedPercentage,
+                    remaining: remainingAmount
+                });
+
+            } catch (error) {
+                console.error('Error updating donation progress:', error);
             }
         }
 
         // Function to manually update donation value (for testing or external updates)
         function updateDonationValue(newAmount) {
-            const collectedElement = document.getElementById('donation-collected');
-            if (collectedElement) {
-                collectedElement.textContent = formatCurrency(newAmount);
-                updateDonationProgress();
+            try {
+                const collectedElement = document.getElementById('donation-collected');
+                if (collectedElement) {
+                    const formattedAmount = formatCurrency(newAmount);
+                    collectedElement.textContent = formattedAmount;
+                    updateDonationProgress();
+                    showToast(`Donasi berhasil diupdate menjadi ${formattedAmount}`);
+                }
+            } catch (error) {
+                console.error('Error updating donation value:', error);
             }
         }
 
-        // Auto-update when page loads and every 30 seconds for real-time feel
-        document.addEventListener('DOMContentLoaded', () => {
-            updateDonationProgress();
-            
-            // Add touch interaction for mobile
-            const progressBar = document.getElementById('progress-bar-fill');
-            if (progressBar) {
-                progressBar.addEventListener('touchstart', () => {
-                    progressBar.style.filter = 'brightness(1.1)';
-                });
-                progressBar.addEventListener('touchend', () => {
-                    setTimeout(() => {
-                        progressBar.style.filter = 'brightness(1)';
-                    }, 200);
-                });
+        // Initialize when DOM is ready
+        function initializeDonationSystem() {
+            try {
+                console.log('Initializing donation system...');
+                
+                // Initial calculation
+                updateDonationProgress();
+                
+                // Add touch interaction for mobile
+                const progressBar = document.getElementById('progress-bar-fill');
+                if (progressBar) {
+                    progressBar.addEventListener('touchstart', () => {
+                        progressBar.style.filter = 'brightness(1.1)';
+                    });
+                    progressBar.addEventListener('touchend', () => {
+                        setTimeout(() => {
+                            progressBar.style.filter = 'brightness(1)';
+                        }, 200);
+                    });
+                }
+
+
+
+                console.log('Donation system initialized successfully');
+            } catch (error) {
+                console.error('Error initializing donation system:', error);
             }
+        }
 
-            // Add event listener for contenteditable donation amount
-            const collectedElement = document.getElementById('donation-collected');
-            if (collectedElement) {
-                // Update on input change
-                collectedElement.addEventListener('input', () => {
-                    // Debounce to avoid too many updates
-                    clearTimeout(collectedElement.updateTimeout);
-                    collectedElement.updateTimeout = setTimeout(() => {
-                        updateDonationProgress();
-                    }, 300);
-                });
-
-                // Format the text when user finishes editing
-                collectedElement.addEventListener('blur', () => {
-                    const amount = parseAmount(collectedElement.textContent);
-                    if (amount > 0) {
-                        collectedElement.textContent = formatCurrency(amount);
-                        updateDonationProgress();
-                    }
-                });
-
-                // Add visual feedback on focus
-                collectedElement.addEventListener('focus', () => {
-                    collectedElement.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                    collectedElement.style.borderRadius = '4px';
-                });
-
-                collectedElement.addEventListener('blur', () => {
-                    collectedElement.style.backgroundColor = '';
-                    collectedElement.style.borderRadius = '';
-                });
-            }
-        });
-
-        // Optional: Auto-refresh every 30 seconds (can be disabled for static sites)
-        // setInterval(updateDonationProgress, 30000);
-
-        // Expose function globally for external updates
+        // Expose functions globally for external updates
         window.updateDonationProgress = updateDonationProgress;
+        window.updateDonationValue = updateDonationValue;
 
         function copyAccountNumber() {
             const accountNumber = "715 084 2829";
@@ -1311,12 +1323,15 @@
             }, 3000);
         }
 
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeDonationSystem);
+        } else {
+            initializeDonationSystem();
+        }
 
-
-        // Initialize donation progress when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            updateDonationProgress();
-        });
+        // Also initialize when window loads (backup)
+        window.addEventListener('load', initializeDonationSystem);
     </script>
 </body>
 </html>
