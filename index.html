@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -161,25 +161,25 @@
 
         /* Typography - Consistent Font Sizing */
         :root {
-            --font-h1: 3.5rem;
-            --font-h2: 2.5rem;
-            --font-h3: 1.5rem;
-            --font-h4: 1.1rem;
-            --font-body: 1rem;
-            --font-small: 0.9rem;
-            --font-xs: 0.85rem;
+            --font-h1: 2.5rem;
+            --font-h2: 1.8rem;
+            --font-h3: 1.2rem;
+            --font-h4: 0.95rem;
+            --font-body: 0.8rem;
+            --font-small: 0.75rem;
+            --font-xs: 0.7rem;
             --weight-bold: 700;
             --weight-semi: 600;
             --weight-medium: 500;
             --weight-regular: 400;
-            --spacing-xs: 0.5rem;
-            --spacing-sm: 1rem;
-            --spacing-md: 1.5rem;
-            --spacing-lg: 2rem;
-            --spacing-xl: 3rem;
-            --shadow-sm: 0 2px 8px rgba(4, 98, 106, 0.1);
-            --shadow-md: 0 4px 12px rgba(4, 98, 106, 0.15);
-            --shadow-lg: 0 8px 24px rgba(4, 98, 106, 0.2);
+            --spacing-xs: 0.3rem;
+            --spacing-sm: 0.6rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.4rem;
+            --spacing-xl: 2rem;
+            --shadow-sm: 0 2px 6px rgba(4, 98, 106, 0.1);
+            --shadow-md: 0 3px 10px rgba(4, 98, 106, 0.15);
+            --shadow-lg: 0 6px 20px rgba(4, 98, 106, 0.2);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -187,7 +187,7 @@
             font-family: 'DM Sans', sans-serif;
             color: #1a1a1a;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.85) 50%, rgba(240, 248, 250, 0.9) 100%);
-            line-height: 1.6;
+            line-height: 1.5;
             min-height: 100vh;
             font-weight: var(--weight-regular);
         }
@@ -241,7 +241,7 @@
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 1rem 2rem;
+            padding: 0.7rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -473,62 +473,111 @@
             letter-spacing: -0.5px;
         }
 
-        /* Combined Donation Card */
+        /* Combined Donation Card - Enhanced for Target Section */
         .donation-combined-card {
-            background: rgba(155, 196, 203, 0.15);
-            border: 1px solid rgba(4, 98, 106, 0.2);
-            border-radius: 12px;
+            background: linear-gradient(135deg, 
+                rgba(34, 197, 94, 0.15) 0%, 
+                rgba(74, 222, 128, 0.2) 25%, 
+                rgba(4, 98, 106, 0.1) 75%, 
+                rgba(155, 196, 203, 0.15) 100%);
+            border: 2px solid rgba(34, 197, 94, 0.6);
+            border-radius: 16px;
             padding: var(--spacing-xl);
             text-align: center;
             transition: var(--transition);
-            box-shadow: var(--shadow-sm);
+            box-shadow: 
+                0 8px 25px rgba(34, 197, 94, 0.15),
+                0 4px 15px rgba(4, 98, 106, 0.1);
             max-width: 500px;
             margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donation-combined-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.4) 50%, 
+                transparent 100%);
+            transition: left 0.8s ease;
+        }
+
+        .donation-combined-card:hover::before {
+            left: 100%;
         }
 
         .donation-combined-card:hover {
-            border-color: #04626a;
-            background: rgba(4, 98, 106, 0.08);
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-lg);
+            border-color: rgba(34, 197, 94, 0.8);
+            background: linear-gradient(135deg, 
+                rgba(34, 197, 94, 0.2) 0%, 
+                rgba(74, 222, 128, 0.25) 25%, 
+                rgba(4, 98, 106, 0.15) 75%, 
+                rgba(155, 196, 203, 0.2) 100%);
+            transform: translateY(-8px);
+            box-shadow: 
+                0 15px 35px rgba(34, 197, 94, 0.2),
+                0 8px 25px rgba(4, 98, 106, 0.15);
         }
 
         .donation-collected {
-            font-size: 2.5rem;
-            font-weight: var(--weight-bold);
+            font-size: 2.8rem;
+            font-weight: 900;
             color: #04626a;
             margin-bottom: var(--spacing-sm);
-            letter-spacing: -0.5px;
+            letter-spacing: -0.8px;
+            text-shadow: 0 2px 4px rgba(4, 98, 106, 0.1);
+            background: linear-gradient(135deg, #04626a 0%, #9BC4CB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .donation-target {
-            font-size: var(--font-body);
-            color: #666;
+            font-size: 1.1rem;
+            color: #333;
             margin-bottom: var(--spacing-lg);
-            font-weight: var(--weight-regular);
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .progress-container {
             margin: var(--spacing-lg) 0;
+            position: relative;
         }
 
         .progress-bar-bg {
             width: 100%;
-            height: 12px;
-            background-color: rgba(155, 196, 203, 0.3);
-            border-radius: 6px;
+            height: 16px;
+            background: linear-gradient(135deg, 
+                rgba(155, 196, 203, 0.3) 0%, 
+                rgba(155, 196, 203, 0.1) 100%);
+            border-radius: 8px;
             overflow: hidden;
             margin-bottom: var(--spacing-sm);
-            box-shadow: inset 0 2px 4px rgba(4, 98, 106, 0.1);
+            box-shadow: 
+                inset 0 2px 4px rgba(4, 98, 106, 0.1),
+                0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
         .progress-bar-fill {
             height: 100%;
-            background: linear-gradient(90deg, #04626a 0%, #9BC4CB 100%);
-            border-radius: 6px;
-            transition: width 1s ease-in-out;
+            background: linear-gradient(90deg, 
+                #04626a 0%, 
+                #9BC4CB 30%,
+                #22C55E 70%,
+                #4ADE80 100%);
+            border-radius: 8px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 2px 6px rgba(4, 98, 106, 0.3);
         }
 
         .progress-bar-fill::after {
@@ -538,8 +587,25 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
-            animation: shimmer 2s infinite;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.4) 50%, 
+                transparent 100%);
+            animation: shimmer 2.5s infinite;
+        }
+
+        .progress-bar-fill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                transparent 50%, 
+                rgba(255, 255, 255, 0.1) 100%);
+            animation: pulse 3s ease-in-out infinite;
         }
 
         @keyframes shimmer {
@@ -547,11 +613,52 @@
             100% { transform: translateX(100%); }
         }
 
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
         .progress-text {
-            font-size: var(--font-h4);
-            font-weight: var(--weight-semi);
+            font-size: 1.1rem;
+            font-weight: 700;
             color: #04626a;
             letter-spacing: -0.5px;
+            text-shadow: 0 1px 2px rgba(4, 98, 106, 0.1);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: 8px;
+            margin-top: var(--spacing-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(4, 98, 106, 0.1);
+        }
+
+        .progress-stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .progress-stat-label {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .progress-stat-value {
+            font-size: 0.9rem;
+            color: #04626a;
+            font-weight: 700;
         }
 
         /* Donation Section */
@@ -882,7 +989,7 @@
             }
         }
 
-        /* Responsive */
+        /* Responsive Design */
         @media (max-width: 768px) {
             :root {
                 --font-h1: 2.2rem;
@@ -925,6 +1032,113 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+
+            /* Enhanced Mobile Donations Section */
+            .donation-combined-card {
+                padding: 2rem 1.5rem;
+                margin: 0 1rem;
+                max-width: none;
+            }
+
+            .donation-collected {
+                font-size: 2.4rem;
+                line-height: 1.1;
+            }
+
+            .donation-target {
+                font-size: 1rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .progress-container {
+                margin: 1.5rem 0;
+            }
+
+            .progress-bar-bg {
+                height: 14px;
+                background: linear-gradient(135deg, 
+                    rgba(155, 196, 203, 0.3) 0%, 
+                    rgba(155, 196, 203, 0.1) 100%);
+                border: 1px solid rgba(34, 197, 94, 0.2);
+            }
+
+            .progress-bar-fill {
+                border-radius: 7px;
+            }
+
+            .progress-text {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .progress-stats {
+                flex-direction: column;
+                gap: 0.75rem;
+                padding: 1rem;
+                text-align: center;
+            }
+
+            .progress-stat-item {
+                width: 100%;
+            }
+
+            /* Enhanced touch interactions */
+            .copy-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                min-height: 44px; /* iOS recommended touch target */
+            }
+
+            .btn {
+                padding: 1rem 2rem;
+                font-size: 0.9rem;
+                min-height: 44px;
+            }
+
+            /* Better mobile spacing */
+            .container {
+                padding: 0 1rem;
+            }
+
+            .section-title {
+                margin-bottom: 2rem;
+            }
+
+            .section-subtitle {
+                margin-bottom: 2.5rem;
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .donation-combined-card {
+                padding: 1.5rem 1rem;
+                margin: 0 0.5rem;
+            }
+
+            .donation-collected {
+                font-size: 2.1rem;
+            }
+
+            .progress-bar-bg {
+                height: 12px;
+                background: linear-gradient(135deg, 
+                    rgba(155, 196, 203, 0.3) 0%, 
+                    rgba(155, 196, 203, 0.1) 100%);
+                border: 1px solid rgba(34, 197, 94, 0.2);
+            }
+
+            .progress-bar-fill {
+                border-radius: 6px;
+            }
+
+            .progress-stats {
+                padding: 0.75rem;
+            }
+
+            .bank-details {
+                padding: 1rem;
+            }
         }
     </style>
 </head>
@@ -961,13 +1175,27 @@
         <section id="target" class="section">
             <h2 class="section-title">Target Donasi</h2>
             <div class="donation-combined-card">
-                <div class="donation-collected" id="donation-collected">Rp. 9.780.000</div>
+                <div class="donation-collected" id="donation-collected" data-target="189640000" contenteditable="true" title="Klik untuk edit nilai donasi">Rp. 9.780.000</div>
                 <div class="donation-target" id="donation-target">Target: Rp. 189.640.000</div>
                 <div class="progress-container">
                     <div class="progress-bar-bg">
                         <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%"></div>
                     </div>
-                    <div class="progress-text" id="progress-text">0% terkumpul</div>
+                    <div class="progress-text" id="progress-text">10.42% terkumpul</div>
+                    <div class="progress-stats">
+                        <div class="progress-stat-item">
+                            <div class="progress-stat-label">Tersimpan</div>
+                            <div class="progress-stat-value" id="collected-display">Rp. 19.780.000</div>
+                        </div>
+                        <div class="progress-stat-item">
+                            <div class="progress-stat-label">Target</div>
+                            <div class="progress-stat-value" id="target-display">Rp. 189.640.000</div>
+                        </div>
+                        <div class="progress-stat-item">
+                            <div class="progress-stat-label">Sisa</div>
+                            <div class="progress-stat-value" id="remaining-display">Rp. 169.860.000</div>
+                        </div>
+                    </div>
                 </div>
                 <p style="color: #666; font-size: 0.9rem; margin-top: 1.5rem;">Setiap kontribusi yang masuk dicatat dan dikelola secara bertanggung jawab sebagai bentuk komitmen kami terhadap transparansi dan kepercayaan.</p>
             </div>
@@ -1061,28 +1289,155 @@
     </footer>
 
     <script>
-        // Donation Progress Calculator
+        // Enhanced Donation Progress Calculator with Automation
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount).replace('Rp', 'Rp.');
+        }
+
+        function parseAmount(text) {
+            // Remove currency formatting and convert to number
+            return parseInt(text.replace(/[^\d]/g, ''));
+        }
+
         function updateDonationProgress() {
-            const targetAmount = 189640000; // Rp. 189.640.000
-            const collectedAmount = 9780000; // Rp. 9.780.000
-            
-            const percentage = (collectedAmount / targetAmount) * 100;
-            const roundedPercentage = Math.round(percentage * 100) / 100; // Round to 2 decimal places
-            
-            // Update progress bar width
+            const collectedElement = document.getElementById('donation-collected');
+            const targetElement = document.getElementById('donation-target');
             const progressBar = document.getElementById('progress-bar-fill');
             const progressText = document.getElementById('progress-text');
+            const collectedDisplay = document.getElementById('collected-display');
+            const targetDisplay = document.getElementById('target-display');
+            const remainingDisplay = document.getElementById('remaining-display');
+
+            if (!collectedElement || !progressBar) return;
+
+            // Extract target from data attribute
+            const targetAmount = parseInt(collectedElement.getAttribute('data-target')) || 189640000;
             
+            // Extract collected amount from main element text content
+            const collectedAmount = parseAmount(collectedElement.textContent);
+            
+            // Calculate percentage and remaining
+            const percentage = (collectedAmount / targetAmount) * 100;
+            const remainingAmount = Math.max(0, targetAmount - collectedAmount);
+            const roundedPercentage = Math.round(percentage * 100) / 100; // Round to 2 decimal places
+            
+            // Update progress bar with smooth animation
             if (progressBar && progressText) {
-                progressBar.style.width = `${roundedPercentage}%`;
-                progressText.textContent = `${roundedPercentage}% terkumpul`;
-                
-                // Add animation delay for smooth transition
+                progressBar.style.width = '0%';
                 setTimeout(() => {
-                    progressBar.style.width = `${roundedPercentage}%`;
+                    progressBar.style.width = `${Math.min(roundedPercentage, 100)}%`;
                 }, 100);
+                
+                progressText.textContent = `${roundedPercentage}% terkumpul`;
+            }
+
+            // Update all display elements to ensure consistency
+            if (collectedDisplay) {
+                collectedDisplay.textContent = formatCurrency(collectedAmount);
+            }
+            if (targetDisplay) {
+                targetDisplay.textContent = formatCurrency(targetAmount);
+            }
+            if (remainingDisplay) {
+                if (remainingAmount > 0) {
+                    remainingDisplay.textContent = formatCurrency(remainingAmount);
+                    remainingDisplay.style.color = '#04626a';
+                } else {
+                    remainingDisplay.textContent = 'Target Tercapai!';
+                    remainingDisplay.style.color = '#22863a';
+                }
+            }
+
+            // Update target element if needed
+            if (targetElement && !targetElement.textContent.includes(formatCurrency(targetAmount))) {
+                targetElement.textContent = `Target: ${formatCurrency(targetAmount)}`;
+            }
+
+            // Add dynamic color changes based on progress
+            const progressBarFill = document.getElementById('progress-bar-fill');
+            if (progressBarFill) {
+                if (roundedPercentage >= 100) {
+                    progressBarFill.style.background = 'linear-gradient(90deg, #22863a 0%, #4ade80 100%)';
+                } else if (roundedPercentage >= 75) {
+                    progressBarFill.style.background = 'linear-gradient(90deg, #22c55e 0%, #4ade80 100%)';
+                } else if (roundedPercentage >= 50) {
+                    progressBarFill.style.background = 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)';
+                } else {
+                    progressBarFill.style.background = 'linear-gradient(90deg, #04626a 0%, #9BC4CB 30%, #22C55E 70%, #4ADE80 100%)';
+                }
             }
         }
+
+        // Function to manually update donation value (for testing or external updates)
+        function updateDonationValue(newAmount) {
+            const collectedElement = document.getElementById('donation-collected');
+            if (collectedElement) {
+                collectedElement.textContent = formatCurrency(newAmount);
+                updateDonationProgress();
+            }
+        }
+
+        // Auto-update when page loads and every 30 seconds for real-time feel
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDonationProgress();
+            
+            // Add touch interaction for mobile
+            const progressBar = document.getElementById('progress-bar-fill');
+            if (progressBar) {
+                progressBar.addEventListener('touchstart', () => {
+                    progressBar.style.filter = 'brightness(1.1)';
+                });
+                progressBar.addEventListener('touchend', () => {
+                    setTimeout(() => {
+                        progressBar.style.filter = 'brightness(1)';
+                    }, 200);
+                });
+            }
+
+            // Add event listener for contenteditable donation amount
+            const collectedElement = document.getElementById('donation-collected');
+            if (collectedElement) {
+                // Update on input change
+                collectedElement.addEventListener('input', () => {
+                    // Debounce to avoid too many updates
+                    clearTimeout(collectedElement.updateTimeout);
+                    collectedElement.updateTimeout = setTimeout(() => {
+                        updateDonationProgress();
+                    }, 300);
+                });
+
+                // Format the text when user finishes editing
+                collectedElement.addEventListener('blur', () => {
+                    const amount = parseAmount(collectedElement.textContent);
+                    if (amount > 0) {
+                        collectedElement.textContent = formatCurrency(amount);
+                        updateDonationProgress();
+                    }
+                });
+
+                // Add visual feedback on focus
+                collectedElement.addEventListener('focus', () => {
+                    collectedElement.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                    collectedElement.style.borderRadius = '4px';
+                });
+
+                collectedElement.addEventListener('blur', () => {
+                    collectedElement.style.backgroundColor = '';
+                    collectedElement.style.borderRadius = '';
+                });
+            }
+        });
+
+        // Optional: Auto-refresh every 30 seconds (can be disabled for static sites)
+        // setInterval(updateDonationProgress, 30000);
+
+        // Expose function globally for external updates
+        window.updateDonationProgress = updateDonationProgress;
 
         function copyAccountNumber() {
             const accountNumber = "715 084 2829";
