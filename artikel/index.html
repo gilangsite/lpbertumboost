@@ -144,18 +144,19 @@
         .mobile-nav {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            top: 70px;
+            right: 1rem;
+            width: 200px;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(4, 98, 106, 0.15);
+            border: 1px solid rgba(4, 98, 106, 0.2);
             z-index: 150;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             opacity: 0;
             visibility: hidden;
+            transform: translateY(-10px);
             transition: all 0.3s ease;
         }
 
@@ -163,19 +164,56 @@
             display: flex;
             opacity: 1;
             visibility: visible;
+            transform: translateY(0);
         }
 
         .mobile-nav .nav-link {
-            font-size: 1.2rem;
-            margin: 0.8rem 0;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
             color: var(--primary-color);
             font-weight: 600;
             transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(4, 98, 106, 0.1);
+            text-align: center;
+        }
+
+        .mobile-nav .nav-link:last-child {
+            border-bottom: none;
         }
 
         .mobile-nav .nav-link:hover {
+            background: rgba(4, 98, 106, 0.05);
             color: var(--text-gray);
-            transform: scale(1.05);
+        }
+
+        .mobile-nav .nav-link:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .mobile-nav .nav-link:last-child {
+            border-radius: 0 0 12px 12px;
+        }
+
+        /* Backdrop blur effect */
+        .mobile-nav-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 140;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-backdrop.active {
+            display: block;
+            opacity: 1;
+            visibility: visible;
         }
 
         .cta-button {
@@ -787,18 +825,19 @@
         .mobile-nav {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            top: 70px;
+            right: 1rem;
+            width: 200px;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(4, 98, 106, 0.15);
+            border: 1px solid rgba(4, 98, 106, 0.2);
             z-index: 150;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             opacity: 0;
             visibility: hidden;
+            transform: translateY(-10px);
             transition: all 0.3s ease;
         }
 
@@ -806,19 +845,56 @@
             display: flex;
             opacity: 1;
             visibility: visible;
+            transform: translateY(0);
         }
 
         .mobile-nav .nav-link {
-            font-size: 1.2rem;
-            margin: 0.8rem 0;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
             color: var(--primary-color);
             font-weight: 600;
             transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(4, 98, 106, 0.1);
+            text-align: center;
+        }
+
+        .mobile-nav .nav-link:last-child {
+            border-bottom: none;
         }
 
         .mobile-nav .nav-link:hover {
+            background: rgba(4, 98, 106, 0.05);
             color: var(--text-gray);
-            transform: scale(1.05);
+        }
+
+        .mobile-nav .nav-link:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .mobile-nav .nav-link:last-child {
+            border-radius: 0 0 12px 12px;
+        }
+
+        /* Backdrop blur effect */
+        .mobile-nav-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 140;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-backdrop.active {
+            display: block;
+            opacity: 1;
+            visibility: visible;
         }
 
         /* Responsive Navigation */
@@ -1029,6 +1105,9 @@
                 <span></span>
                 <span></span>
             </div>
+            
+            <!-- Mobile Navigation Backdrop -->
+            <div class="mobile-nav-backdrop" id="mobile-nav-backdrop"></div>
             
             <!-- Mobile Navigation -->
             <div class="mobile-nav" id="mobile-nav">
@@ -1558,11 +1637,12 @@
         // Mobile menu functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileNav = document.getElementById('mobile-nav');
+        const mobileNavBackdrop = document.getElementById('mobile-nav-backdrop');
 
         mobileMenuButton.addEventListener('click', function() {
             this.classList.toggle('active');
             mobileNav.classList.toggle('active');
-            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : 'auto';
+            mobileNavBackdrop.classList.toggle('active');
         });
 
         // Close mobile menu when clicking on a link
@@ -1570,16 +1650,23 @@
             link.addEventListener('click', function() {
                 mobileMenuButton.classList.remove('active');
                 mobileNav.classList.remove('active');
-                document.body.style.overflow = 'auto';
+                mobileNavBackdrop.classList.remove('active');
             });
+        });
+
+        // Close mobile menu when clicking on backdrop
+        mobileNavBackdrop.addEventListener('click', function() {
+            mobileMenuButton.classList.remove('active');
+            mobileNav.classList.remove('active');
+            mobileNavBackdrop.classList.remove('active');
         });
 
         // Close mobile menu when clicking outside
         document.addEventListener('click', function(e) {
-            if (!mobileMenuButton.contains(e.target) && !mobileNav.contains(e.target)) {
+            if (!mobileMenuButton.contains(e.target) && !mobileNav.contains(e.target) && !mobileNavBackdrop.contains(e.target)) {
                 mobileMenuButton.classList.remove('active');
                 mobileNav.classList.remove('active');
-                document.body.style.overflow = 'auto';
+                mobileNavBackdrop.classList.remove('active');
             }
         });
     </script>
