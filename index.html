@@ -103,6 +103,34 @@
             width: 100%;
         }
 
+        /* Navigation Button Styling */
+        .nav-button {
+            background: #04626a;
+            color: white !important;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: #035057;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(4, 98, 106, 0.3);
+        }
+
+        .nav-button.active {
+            background: #035057;
+            color: white !important;
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-button::after {
+            display: none;
+        }
+
         /* Mobile Navigation */
         .mobile-menu-button {
             display: none;
@@ -855,6 +883,52 @@
             margin: 2rem 0;
         }
 
+        /* Cards Grid Styling for Program Section */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: rgba(4, 98, 106, 0.05);
+            border: 2px solid #9BC4CB;
+            border-radius: 12px;
+            padding: var(--spacing-xl);
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card:hover {
+            border-color: #04626a;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card h3 {
+            font-size: var(--font-h3);
+            color: #04626a;
+            margin-bottom: var(--spacing-sm);
+            font-weight: var(--weight-semi);
+            letter-spacing: -0.5px;
+            text-align: center;
+        }
+
+        .card p {
+            color: #555;
+            line-height: 1.8;
+            font-size: var(--font-body);
+            font-weight: var(--weight-regular);
+            text-align: justify;
+            margin-bottom: 0;
+        }
+
         /* Closing Section */
         .closing-section {
             background: linear-gradient(135deg, rgba(4, 98, 106, 0.08) 0%, rgba(155, 196, 203, 0.12) 100%);
@@ -1131,8 +1205,8 @@
         <div class="nav-container">
             <a href="index.html" class="nav-logo">Bertumboost</a>
             <div class="nav-menu">
-                <a href="index.html" class="nav-link active">Donation</a>
-                <a href="artikel/artikel-index.html" class="nav-link">Program</a>
+                <a href="index.html" class="nav-link nav-button active">Donation</a>
+                <a href="artikel/index.html" class="nav-link nav-button">Program</a>
             </div>
             
             <!-- Mobile Menu Button -->
@@ -1144,8 +1218,8 @@
             
             <!-- Mobile Navigation -->
             <div class="mobile-nav" id="mobile-nav">
-                <a href="index.html" class="nav-link active">Donation</a>
-                <a href="artikel/artikel-index.html" class="nav-link">Program</a>
+                <a href="index.html" class="nav-link nav-button active">Donation</a>
+                <a href="artikel/index.html" class="nav-link nav-button">Program</a>
             </div>
         </div>
     </nav>
@@ -1243,6 +1317,44 @@
                 <div class="btn-group">
                     <a href="http://bit.ly/RelawanPulih" target="_blank" class="btn btn-primary" style="text-align: center;">Daftar Relawan</a>
                 </div>
+            </div>
+        </section>
+
+        <!-- Program Section -->
+        <section id="program" class="section">
+            <h2 class="section-title">Program Penyaluran Donasi</h2>
+            <p class="section-subtitle">Donasi yang Anda berikan akan digunakan untuk program kemanusiaan yang menggabungkan bantuan logistik dan penguatan kesehatan mental bagi penyintas bencana.</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Bantuan Kebutuhan Dasar</h3>
+                        <p>Penyediaan logistik esensial seperti makanan, pakaian, air bersih, dan perlengkapan anak untuk memastikan kebutuhan fisik terpenuhi.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Pendampingan Psikologis (PFA)</h3>
+                        <p>Psychological First Aid berbasis bukti ilmiah untuk membantu penyintas pulih secara emosional dan mental dengan pendekatan empati.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Aktivitas Ramah Anak</h3>
+                        <p>Kegiatan bermain, menggambar, dan ekspresi emosi yang dirancang untuk memberikan ruang aman bagi anak-anak mengekspresikan diri.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <h4>Pulih bukan hanya soal bertahan hidup</h4>
+                <p>Pulih adalah tentang <strong>merasa aman kembali, didengar, dan memiliki harapan</strong>. Setiap donasi yang Anda berikan membantu menciptakan ruang pemulihan yang komprehensif bagi penyintas bencana.</p>
+            </div>
+
+            <div class="btn-group">
+                <a href="artikel/index.html" class="btn btn-primary">Kunjungi Program Lengkap</a>
             </div>
         </section>
 
