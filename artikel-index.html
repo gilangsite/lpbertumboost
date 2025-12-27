@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulih dan Bertumboost - Gerakan Pemulihan Pascabencana</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-color: #04626A;
+            --white: #FFFFFF;
+            --light-bg: #F8FAFB;
+            --text-dark: #1A1A1A;
+            --text-gray: #666666;
+            --border-color: #E8E8E8;
+            --hover-overlay: rgba(4, 98, 106, 0.05);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* ==================== HEADER & NAVIGATION ==================== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+            transition: all 0.3s ease;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-button {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 200;
+        }
+
+        .mobile-menu-button span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-button.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu-button.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-button.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 150;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav .nav-link {
+            font-size: 1.2rem;
+            margin: 0.8rem 0;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav .nav-link:hover {
+            color: var(--text-gray);
+            transform: scale(1.05);
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .cta-button:hover {
+            background-color: #05a070;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(4, 98, 106, 0.2);
+        }
+
+        .cta-button:active {
+            background-color: #048f5e;
+            transform: translateY(0);
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #06757E 100%);
+            color: var(--white);
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero h1 {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            transform: translate(150px, -150px);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            transform: translate(-100px, 100px);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            color: var(--white);
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-buttons .cta-button {
+            background-color: var(--white);
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            font-weight: 600;
+        }
+
+        .hero-buttons .cta-button:hover {
+            background-color: #F0F0F0;
+        }
+
+        .hero-buttons .cta-button.secondary {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .hero-buttons .cta-button.secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--white);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== MAIN CONTENT ==================== */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 5rem;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        section h2::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        section p {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        /* ==================== FEATURED IMAGE ==================== */
+        .featured-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--hover-overlay) 0%, #E8F0F1 100%);
+            border-radius: 12px;
+            margin: 2rem 0;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .featured-image:hover {
+            background: linear-gradient(135deg, rgba(4, 98, 106, 0.08) 0%, #DFE9EA 100%);
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .featured-image.placeholder {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 2rem;
+            font-weight: 500;
+        }
+
+        /* ==================== EXPANDABLE SECTIONS ==================== */
+        .expandable-section {
+            background: var(--light-bg);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .expandable-section:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 24px rgba(4, 98, 106, 0.1);
+        }
+
+        .expandable-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .expandable-section:hover .expandable-header {
+            background: var(--light-bg);
+        }
+
+        .expandable-header h3 {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .expandable-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .expandable-section.active .expandable-icon {
+            transform: rotate(180deg);
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.5rem;
+        }
+
+        .expandable-section.active .expandable-content {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        .expandable-content p {
+            margin-bottom: 1rem;
+        }
+
+        .expandable-content ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .expandable-content li {
+            margin-bottom: 0.75rem;
+            color: var(--text-gray);
+        }
+
+        /* ==================== CARDS GRID ==================== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--hover-overlay);
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+
+        .card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 16px 40px rgba(4, 98, 106, 0.15);
+            transform: translateY(-8px);
+        }
+
+        .card:hover::before {
+            left: 0;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: var(--text-gray);
+            line-height: 1.7;
+        }
+
+        /* ==================== TIMELINE ==================== */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), #DFE9EA);
+        }
+
+        .timeline-item {
+            margin-bottom: 3rem;
+            width: 100%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            text-align: right;
+            padding-right: 52%;
+        }
+
+        .timeline-item:nth-child(even) {
+            text-align: left;
+            padding-left: 52%;
+        }
+
+        .timeline-content {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .timeline-content:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 24px rgba(4, 98, 106, 0.1);
+            transform: scale(1.02);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-left-color: var(--light-bg);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::after {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 30px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+            border-right-color: var(--light-bg);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 30px;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            border: 4px solid var(--white);
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 0 0 4px var(--primary-color), 0 0 0 8px var(--white);
+        }
+
+        .timeline-content h4 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .timeline-content p {
+            color: var(--text-gray);
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                text-align: left;
+                padding-left: 70px;
+                padding-right: 0;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-content::after,
+            .timeline-item:nth-child(even) .timeline-content::after {
+                display: none;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+
+        /* ==================== TEXT HIGHLIGHTS ==================== */
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, var(--primary-color), #06757E);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 5px solid var(--white);
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .quote-box:hover {
+            transform: translateX(10px);
+            box-shadow: 0 16px 40px rgba(4, 98, 106, 0.2);
+        }
+
+        /* ==================== IMAGE GALLERY ==================== */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            aspect-ratio: 1 / 1;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--hover-overlay) 0%, #E8F0F1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            box-shadow: 0 12px 32px rgba(4, 98, 106, 0.15);
+            transform: translateY(-8px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-placeholder {
+            color: var(--primary-color);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 3rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+
+        .footer-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 2rem 0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* ==================== MOBILE NAVIGATION ==================== */
+        .mobile-menu-button {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 200;
+        }
+
+        .mobile-menu-button span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-button.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu-button.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-button.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 150;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav .nav-link {
+            font-size: 1.2rem;
+            margin: 0.8rem 0;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav .nav-link:hover {
+            color: var(--text-gray);
+            transform: scale(1.05);
+        }
+
+        /* Responsive Navigation */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: flex;
+            }
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            section h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons .cta-button {
+                width: 100%;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: flex;
+            }
+
+            .header-container {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            section h2 {
+                font-size: 1.4rem;
+            }
+
+            .featured-image {
+                height: 250px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .expandable-header h3 {
+                font-size: 1rem;
+            }
+        }
+
+        /* ==================== SCROLL ANIMATION ==================== */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .scroll-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================== HEADER ==================== -->
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">Bertumboost</a>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link">Donation</a>
+                <a href="artikel-index.html" class="nav-link active">Program</a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <div class="mobile-menu-button" id="mobile-menu-button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div class="mobile-nav" id="mobile-nav">
+                <a href="../index.html" class="nav-link">Donation</a>
+                <a href="artikel-index.html" class="nav-link active">Program</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== HERO SECTION ==================== -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Pulih dan Bertumboost</h1>
+            <p>Gerakan pemulihan pascabencana yang menggabungkan bantuan logistik dan penguatan kesehatan mental bagi penyintas, khususnya anak-anak dan remaja.</p>
+            <div class="hero-buttons">
+                <a href="https://forms.gle/y6QEUqzvuTVfkMy26" class="cta-button">Menjadi Relawan</a>
+                <a href="#donasi" class="cta-button secondary">Donasi Sekarang</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <div class="container">
+        <!-- ==================== INTRO SECTION ==================== -->
+        <section id="tentang">
+            <h2>Bencana Datang Tanpa Aba-Aba</h2>
+            <p>Dalam hitungan detik, rumah, kampung, dan rasa aman hilang. Pulih dan Bertumboost hadir untuk menemani penyintas melewati masa paling sulit tidak hanya untuk bertahan, tapi untuk kembali bertumbuh.</p>
+            
+            <div class="featured-image" id="intro-image">
+                <img src="./images/dukungan-3.jpeg" alt="Dukungan dan harapan untuk pulih" loading="lazy" decoding="async">
+            </div>
+
+            <div class="quote-box">
+                "Pemulihan tidak selalu dimulai dari hal besar. Terkadang, cukup dari satu niat baik yang dikumpulkan bersama."
+            </div>
+        </section>
+
+        <!-- ==================== MENGAPA DIBUTUHKAN ==================== -->
+        <section id="mengapa">
+            <h2>Mengapa Program Ini Dibutuhkan</h2>
+            <p>Pada akhir 2025, banjir bandang dan tanah longsor melanda wilayah Aceh dan beberapa provinsi di Sumatera. Ratusan ribu warga kehilangan rumah, akses air bersih, dan kehidupan normal. Anak-anak dan remaja menyaksikan langsung kehancuran lingkungan yang selama ini memberi mereka rasa aman.</p>
+            
+            <div class="expandable-section">
+                <div class="expandable-header">
+                    <h3>Dampak Bencana pada Psikologi Anak</h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <img src="./images/anak-3.jpeg" alt="Dampak psikologis bencana pada anak-anak" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;" loading="lazy" decoding="async">
+                    <p>Di tengah kondisi darurat ini, bantuan logistik sangat penting. Namun, <span class="highlight">pemulihan psikologis sama mendesaknya</span> terutama bagi mereka yang masih bertumbuh.</p>
+                    <ul>
+                        <li>Kehilangan rasa aman dan kepercayaan diri</li>
+                        <li>Trauma akan bencana yang dialami</li>
+                        <li>Gangguan emosional dan perilaku</li>
+                        <li>Putus dari akses pendidikan dan kegiatan normal</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="featured-image" id="dampak-image">
+                <img src="./images/bencana-2.jpeg" alt="Dampak banjir pada lingkungan dan warga" loading="lazy" decoding="async">
+            </div>
+        </section>
+
+        <!-- ==================== APA ITU PULIH DAN BERTUMBOOST ==================== -->
+        <section id="program">
+            <h2>Apa Itu Pulih dan Bertumboost</h2>
+            <p>Pulih bukan hanya soal bertahan hidup. Pulih adalah tentang <span class="highlight">merasa aman kembali, didengar, dan memiliki harapan</span>.</p>
+            
+            <p>Pulih dan Bertumboost adalah program kemanusiaan yang menggabungkan tiga pilar utama:</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Bantuan Kebutuhan Dasar</h3>
+                        <p>Penyediaan logistik esensial seperti makanan, pakaian, air bersih, dan perlengkapan anak untuk memastikan kebutuhan fisik terpenuhi.</p>
+                        <img src="./images/relawan-4.jpeg" alt="Distribusi bantuan logistik kepada penyintas bencana" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 1rem;" loading="lazy" decoding="async">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Pendampingan Psikologis (PFA)</h3>
+                        <p>Psychological First Aid berbasis bukti ilmiah untuk membantu penyintas pulih secara emosional dan mental dengan pendekatan empati.</p>
+                        <img src="./images/anak-1.jpeg" alt="Sesi pendampingan psikologis untuk anak-anak penyintas" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 1rem;" loading="lazy" decoding="async">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Aktivitas Ramah Anak</h3>
+                        <p>Kegiatan bermain, menggambar, dan ekspresi emosi yang dirancang untuk memberikan ruang aman bagi anak-anak mengekspresikan diri.</p>
+                        <img src="./images/anak-4.jpeg" alt="Aktivitas anak-anak di lokasi pengungsian" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 1rem;" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header">
+                    <h3>Lebih Lanjut tentang Psychological First Aid (PFA)</h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <img src="./images/relawan-5.jpeg" alt="Tim PFA sedang melakukan pendampingan psikologis" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;" loading="lazy" decoding="async">
+                    <p>Psychological First Aid (PFA) adalah pendekatan berbasis bukti ilmiah yang dirancang untuk memberikan dukungan emosional dan psikologis kepada individu yang mengalami trauma atau krisis.</p>
+                    <ul>
+                        <li><strong>Manusiawi:</strong> Kami menghormati kemanusiaan dan kesulitan yang dialami setiap individu</li>
+                        <li><strong>Berbasis bukti:</strong> Metode yang telah terbukti efektif dalam penelitian ilmiah</li>
+                        <li><strong>Empati:</strong> Setiap pendampingan dilakukan dengan hati yang tulus dan penuh pemahaman</li>
+                        <li><strong>Aman dan nyaman:</strong> Menciptakan ruang di mana penyintas merasa bebas untuk berbagi dan pulih</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== APA YANG KAMI LAKUKAN ==================== -->
+        <section id="kegiatan">
+            <h2>Apa yang Kami Lakukan di Lapangan</h2>
+            <p>Di lapangan, kami menjalankan kegiatan holistik yang dirancang dengan mempertimbangkan kebutuhan mendesak penyintas:</p>
+            
+            <div class="expandable-section">
+                <div class="expandable-header">
+                    <h3>Distribusi Logistik Dasar</h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <img src="./images/relawan-1.jpeg" alt="Proses distribusi bantuan logistik di lokasi bencana" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;" loading="lazy" decoding="async">
+                    <p>Kami menyediakan kebutuhan dasar yang paling esensial untuk penyintas bencana:</p>
+                    <ul>
+                        <li>Makanan bergizi dan air bersih</li>
+                        <li>Pakaian dan perlengkapan pribadi</li>
+                        <li>Peralatan anak (mainan edukatif, alat tulis, buku)</li>
+                        <li>Perlengkapan kesehatan dan kebersihan</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header">
+                    <h3>Pendampingan Anak & Remaja di Lokasi Pengungsian</h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <img src="./images/anak-2.jpeg" alt="Pendampingan anak-anak di lokasi pengungsian" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;" loading="lazy" decoding="async">
+                    <p>Tim kami hadir langsung di lokasi pengungsian untuk memberikan dukungan emosional dan sosial:</p>
+                    <ul>
+                        <li>Membangun hubungan yang aman dan terpercaya</li>
+                        <li>Mendengarkan cerita dan perasaan anak-anak</li>
+                        <li>Menciptakan rutinitas yang stabil dan menenangkan</li>
+                        <li>Memfasilitasi koneksi dengan teman sebaya dan keluarga</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header">
+                    <h3>Aktivitas Bermain, Menggambar, dan Ekspresi Emosi</h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <img src="./images/anak-3.jpeg" alt="Aktivitas kreatif anak-anak untuk pemulihan psikologis" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;" loading="lazy" decoding="async">
+                    <p> Melalui bermain dan kreativitas, kami membantu anak mengekspresikan perasaan yang sulit diucapkan:</p>
+                    <ul>
+                        <li>Kegiatan bermain terapeutik</li>
+                        <li>Sesi menggambar dan melukis</li>
+                        <li>Storytelling dan musik</li>
+                        <li>Aktivitas kelompok yang membangun kepercayaan</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header">
+                    <h3>Penguatan Komunitas Pengungsi</h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <img src="./images/dukungan-2.jpeg" alt="Gotong royong komunitas untuk pemulihan bersama" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;" loading="lazy" decoding="async">
+                    <p>Kami percaya bahwa komunitas yang kuat dapat bangkit bersama:</p>
+                    <ul>
+                        <li>Memfasilitasi diskusi dan berbagi antar sesama penyintas</li>
+                        <li>Membangun kemitraan dengan tokoh masyarakat lokal</li>
+                        <li>Mendukung inisiatif gotong royong dan saling membantu</li>
+                        <li>Menciptakan visi bersama untuk pemulihan jangka panjang</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="featured-image" id="aktivitas-image">
+                <img src="./images/anak-2.jpeg" alt="Aktivitas ramah anak sebagai bagian dari pemulihan" loading="lazy" decoding="async">
+            </div>
+        </section>
+
+        <!-- ==================== TENTANG BERTUMBOOST ==================== -->
+        <section id="bertumboost">
+            <h2>Tentang Bertumboost</h2>
+            <p>Bertumboost adalah ruang aman bagi individu dan komunitas untuk memahami diri, pulih dari tekanan hidup, dan bertumbuh secara berkelanjutan.</p>
+            
+            <p>Kami percaya bahwa <span class="highlight">setiap orang memiliki potensi untuk bangkit</span> asalkan diberi ruang yang aman, pendampingan yang tepat, dan hubungan yang penuh empati.</p>
+            
+            <p>Pulih dan Bertumboost adalah perpanjangan nilai tersebut dalam konteks kebencanaan. Kami hadir bukan untuk menggantikan peran siapa pun, tapi untuk <span class="highlight">menemani proses pulih dengan empati</span>.</p>
+
+            <div class="featured-image" id="bertumboost-image">
+                <img src="./images/dukungan-1.jpeg" alt="Kebersamaan dan ruang aman untuk bertumbuh" loading="lazy" decoding="async">
+            </div>
+        </section>
+
+        <!-- ==================== VISI & MISI ==================== -->
+        <section id="visi-misi">
+            <h2>Visi & Misi</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Visi</h3>
+                        <p>Menghadirkan gerakan pemulihan mental yang manusiawi dan berkelanjutan di tengah krisis.</p>
+                        <img src="./images/dukungan-3.jpeg" alt="Visi Bertumboost untuk pemulihan mental berkelanjutan" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 1rem;" loading="lazy" decoding="async">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Misi Kami</h3>
+                        <div style="text-align: left;">
+                            <ul style="margin-left: 1.5rem;">
+                                <li style="color: var(--text-gray); margin-bottom: 0.5rem;">Hadir langsung di komunitas terdampak bencana</li>
+                                <li style="color: var(--text-gray); margin-bottom: 0.5rem;">Menguatkan anak dan remaja secara psikologis</li>
+                                <li style="color: var(--text-gray); margin-bottom: 0.5rem;">Menggerakkan relawan berbasis empati</li>
+                                <li style="color: var(--text-gray);">Menumbuhkan harapan dan daya pulih komunitas</li>
+                            </ul>
+                        </div>
+                        <img src="./images/bencana-3.jpeg" alt="Misi dan aksi Bertumboost di lapangan" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-top: 1rem;" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== DAMPAK YANG INGIN DICIPTAKAN ==================== -->
+        <section id="dampak">
+            <h2>Dampak yang Ingin Kami Ciptakan</h2>
+            <p>Kami memiliki visi jangka panjang untuk transformasi nyata dalam kehidupan penyintas:</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="./images/anak-1.jpeg" alt="Anak-anak merasa aman dalam program pemulihan" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;" loading="lazy" decoding="async">
+                        <h4>Anak-anak Kembali Merasa Aman</h4>
+                        <p>Menciptakan lingkungan yang aman secara fisik dan emosional bagi anak-anak untuk pulih dari trauma bencana.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="./images/dukungan-1.jpeg" alt="Keluarga merasa ditemani dalam proses pemulihan" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;" loading="lazy" decoding="async">
+                        <h4>Keluarga Merasa Ditemani</h4>
+                        <p>Keluarga tidak merasa sendirian dalam perjalanan pemulihan mereka, ada pendampingan konsisten dan dukungan komunitas.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="./images/bencana-4.jpeg" alt="Komunitas bangkit bersama dalam pemulihan" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;" loading="lazy" decoding="async">
+                        <h4>Komunitas Bangkit Bersama</h4>
+                        <p>Komunitas memiliki kekuatan, pengetahuan, dan koneksi untuk bangkit dan membangun masa depan yang lebih baik bersama.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <img src="./images/dukungan-2.jpeg" alt="Harapan dan pertumbuhan dalam proses pemulihan" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;" loading="lazy" decoding="async">
+                        <h4>Harapan dan Pertumbuhan</h4>
+                        <p>Pulih adalah proses. Bertumbuh adalah harapan. Setiap individu memiliki potensi untuk berkembang dan mencapai impian mereka.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== CARA TERLIBAT ==================== -->
+        <section id="terlibat">
+            <h2>Bagaimana Cara Terlibat</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Menjadi Relawan</h3>
+                        <p>Siapa pun bisa bergabung. Kamu tidak harus memiliki latar belakang tertentu yang terpenting adalah kesiapan hadir dengan empati dan belajar bersama.</p>
+                        <br>
+                        <a href="https://forms.gle/y6QEUqzvuTVfkMy26" class="cta-button" style="display: inline-block; margin-top: 1rem;">Daftar Sekarang</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Menjadi Donatur</h3>
+                        <p>Donasimu membantu penyediaan logistik dasar, aktivitas pemulihan psikologis anak, dan operasional kegiatan lapangan. Setiap kontribusi berarti.</p>
+                        <br>
+                        <a href="#donasi" class="cta-button" style="display: inline-block; margin-top: 1rem;">Donasi Sekarang</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-box">
+                "Kamu tidak harus datang dengan solusi. Cukup hadir, mendengar, dan menemani."
+            </div>
+        </section>
+
+        <!-- ==================== IMAGE GALLERY ==================== -->
+        <section id="galeri">
+            <h2>Dokumentasi Kegiatan</h2>
+            <p>Berikut adalah dokumentasi visual dari kegiatan Pulih dan Bertumboost di lapangan:</p>
+            
+            <div class="image-gallery">
+                <div class="gallery-item" id="gallery-1">
+                    <img src="./images/relawan-2.jpeg" alt="Relawan menyiapkan bantuan" loading="lazy" decoding="async">
+                </div>
+
+                <div class="gallery-item" id="gallery-2">
+                    <img src="./images/relawan-1.jpeg" alt="Distribusi bantuan oleh relawan" loading="lazy" decoding="async">
+                </div>
+
+                <div class="gallery-item" id="gallery-3">
+                    <img src="./images/anak-1.jpeg" alt="Anak-anak dalam kegiatan pemulihan" loading="lazy" decoding="async">
+                </div>
+
+                <div class="gallery-item" id="gallery-4">
+                    <img src="./images/bencana-1.jpeg" alt="Situasi banjir di permukiman" loading="lazy" decoding="async">
+                </div>
+
+                <div class="gallery-item" id="gallery-5">
+                    <img src="./images/anak-4.jpeg" alt="Anak-anak berkumpul dan merasa aman" loading="lazy" decoding="async">
+                </div>
+
+                <div class="gallery-item" id="gallery-6">
+                    <img src="./images/dukungan-2.jpeg" alt="Solidaritas dan dukungan komunitas" loading="lazy" decoding="async">
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ORANG-ORANG DIBALIK GERAKAN ==================== -->
+        <section id="tim">
+            <h2>Orang-Orang di Balik Gerakan</h2>
+            <p>Pulih dan Bertumboost digerakkan oleh tim yang berdedikasi, relawan berbagai latar belakang, dan mitra serta komunitas lokal yang peduli.</p>
+            
+            <div class="expandable-section">
+                <div class="expandable-header">
+                    <h3>Tim Inti Bertumboost</h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <img src="./images/relawan-3.jpeg" alt="Tim inti Bertumboost yang berdedikasi" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;" loading="lazy" decoding="async">
+                    <p>Tim inti kami terdiri dari individu-individu berpengalaman di bidang kesehatan mental, kemanusiaan, dan pengembangan komunitas:</p>
+                    <ul>
+                        <li>Praktisi kesehatan mental dan psikolog</li>
+                        <li>Pekerja sosial dan fasilitator komunitas</li>
+                        <li>Koordinator lapangan dan logistik</li>
+                        <li>Pendampingan anak dan remaja</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header">
+                    <h3>Relawan Kami</h3>
+                    <span class="expandable-icon">▼</span>
+                </div>
+                <div class="expandable-content">
+                    <img src="./images/relawan-2.jpeg" alt="Relawan Bertumboost dari berbagai latar belakang" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 1.5rem;" loading="lazy" decoding="async">
+                    <p>Relawan kami berasal dari berbagai latar belakang, usia, dan profesi bersatu oleh semangat untuk membantu dan empati terhadap sesama:</p>
+                    <ul>
+                        <li>Mahasiswa dan profesional muda</li>
+                        <li>Guru dan pendidik</li>
+                        <li>Profesional kesehatan</li>
+                        <li>Masyarakat lokal dan tokoh komunitas</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Kami bekerja bersama, saling menjaga, dan saling menguatkan.</strong></p>
+                </div>
+            </div>
+
+            <div class="featured-image" id="tim-image">
+                <img src="./images/relawan-3.jpeg" alt="Relawan membantu di lapangan" loading="lazy" decoding="async">
+            </div>
+        </section>
+
+        <!-- ==================== KONTAK & CTA ==================== -->
+        <section id="kontak" style="text-align: center;">
+            <h2>Mari Hadir Bersama</h2>
+            <p style="font-size: 1.15rem; margin-bottom: 2rem;">Untuk informasi lebih lanjut, pertanyaan, atau untuk terlibat, hubungi tim kami:</p>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-content">
+                        <h3>WhatsApp</h3>
+                        <p><a href="https://wa.me/62812826020277" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">0812-8260-2077</a></p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Email</h3>
+                        <p><a href="mailto:bertumboost.id@gmail.com" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">bertumboost.id@gmail.com</a></p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-content">
+                        <h3>Instagram</h3>
+                        <p><a href="https://instagram.com/bertumboost.id" style="color: var(--primary-color); text-decoration: none; font-weight: 600;">@bertumboost.id</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <h3 style="color: var(--text-dark); margin-bottom: 1rem;">Siap untuk Terlibat?</h3>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://forms.gle/y6QEUqzvuTVfkMy26" class="cta-button">Daftar Sebagai Relawan</a>
+                    <a href="#donasi" class="cta-button" style="background-color: var(--text-gray);">Donasi Sekarang</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <div class="footer-content" style="display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 2rem;">
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;">
+                <a href="https://wa.me/62812826020277" class="cta-button">WhatsApp</a>
+                <a href="mailto:bertumboost.id@gmail.com" class="cta-button">Email</a>
+                <a href="https://instagram.com/bertumboost.id" class="cta-button">Instagram</a>
+            </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Bertumboost. Untuk komunitas yang kuat.</p>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT FOR INTERACTIVITY ==================== -->
+    <script>
+        // Expandable sections functionality
+        document.querySelectorAll('.expandable-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const section = this.parentElement;
+                section.classList.toggle('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Scroll animation for elements
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('section, .card').forEach(el => {
+            el.classList.add('scroll-fade');
+            observer.observe(el);
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 12px rgba(4, 98, 106, 0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Mobile menu functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        mobileMenuButton.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuButton.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuButton.contains(e.target) && !mobileNav.contains(e.target)) {
+                mobileMenuButton.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
