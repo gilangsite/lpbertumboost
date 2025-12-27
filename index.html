@@ -51,6 +51,123 @@
             color: #ffffff;
             text-decoration: none;
             letter-spacing: -0.5px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #ffffff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-button {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 200;
+        }
+
+        .mobile-menu-button span {
+            width: 25px;
+            height: 3px;
+            background: #ffffff;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-menu-button.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-menu-button.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-button.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 150;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav .nav-link {
+            font-size: 1.2rem;
+            margin: 0.8rem 0;
+            color: #04626a;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav .nav-link:hover {
+            color: #035057;
+            transform: scale(1.05);
         }
 
 
@@ -821,6 +938,17 @@
             }
         }
 
+        /* Responsive Navigation */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-menu-button {
+                display: flex;
+            }
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             :root {
@@ -1001,7 +1129,24 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <span class="nav-logo">Bertumboost</span>
+            <a href="index.html" class="nav-logo">Bertumboost</a>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link active">Donation</a>
+                <a href="artikel/artikel-index.html" class="nav-link">Program</a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <div class="mobile-menu-button" id="mobile-menu-button">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <!-- Mobile Navigation -->
+            <div class="mobile-nav" id="mobile-nav">
+                <a href="index.html" class="nav-link active">Donation</a>
+                <a href="artikel/artikel-index.html" class="nav-link">Program</a>
+            </div>
         </div>
     </nav>
 
@@ -1322,6 +1467,34 @@
                 toast.remove();
             }, 3000);
         }
+
+        // Mobile navigation functionality
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        mobileMenuButton.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav .nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenuButton.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileMenuButton.contains(e.target) && !mobileNav.contains(e.target)) {
+                mobileMenuButton.classList.remove('active');
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
 
         // Initialize when DOM is ready
         if (document.readyState === 'loading') {
