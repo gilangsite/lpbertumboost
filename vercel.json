@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    {
+      "source": "/donasi",
+      "destination": "/landing-page/index.html"
+    },
+    {
+      "source": "/artikel",
+      "destination": "/landing-page/artikel/index.html"
+    }
+  ]
+}
+
