@@ -172,8 +172,9 @@
             display: none;
             flex-direction: column;
             cursor: pointer;
-            padding: 0.5rem;
             z-index: 200;
+            background: transparent;
+            border: none;
         }
 
         .mobile-menu-button span {
@@ -1073,6 +1074,7 @@
             text-align: center;
             box-shadow: var(--shadow-sm);
             position: relative;
+            max-width: 100%;
         }
 
         .sponsor-card::before {
@@ -1354,8 +1356,12 @@
                 grid-template-columns: 1fr;
             }
 
+            .sponsorship-grid {
+                padding: 0 1rem;
+            }
+
             .sponsor-card {
-                margin: 0 auto;
+                margin: 0 auto 1.5rem auto;
             }
 
             .gallery-grid {
@@ -2033,11 +2039,12 @@
     <!-- ================================================
          SPONSORSHIP - WITH IMAGES & NEW TIERS
          ================================================ -->
-    <section class="container" style="padding: 4rem 0;">
+    <section class="container sponsorship-section" style="padding: 4rem 0;">
         <h2 class="section-title">Skema Sponsorship</h2>
         <p class="section-subtitle">Jadilah Mitra Perubahan</p>
         
-        <div class="sponsorship-grid">
+        <div class="sponsorship-wrapper">
+            <div class="sponsorship-grid">
             <div class="sponsor-card">
                 <div class="sponsor-image">
                     <img src="images/skema-sponsorship/kawan-pulih.png" alt="Kawan Pulih">
