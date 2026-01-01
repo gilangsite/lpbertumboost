@@ -491,9 +491,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .cofounder-photo {
+        .cofounder-photo-wrapper {
+            position: relative;
             width: 100%;
             max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .cofounder-photo {
+            width: 100%;
             aspect-ratio: 9/18;
             background: transparent;
             border-radius: 12px;
@@ -501,7 +507,6 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            margin: 0 auto;
         }
 
         .cofounder-photo img {
@@ -509,6 +514,47 @@
             height: 100%;
             object-fit: cover;
             border-radius: 12px;
+        }
+
+        /* Tombol Swipe Left/Right untuk Mobile */
+        .swipe-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            background: var(--color-primary-teal);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .swipe-button:hover {
+            background: #035057;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .swipe-button.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .swipe-button.prev {
+            left: -22px;
+        }
+
+        .swipe-button.next {
+            right: -22px;
         }
 
         .cofounder-info {
@@ -712,14 +758,28 @@
                 display: block;
             }
 
+            .cofounder-photo-wrapper {
+                max-width: 280px;
+            }
+
             .cofounder-photo {
-                max-width: 300px;
                 margin: 0 auto;
+            }
+
+            /* Tampilkan tombol swipe di mobile */
+            .swipe-button {
+                opacity: 1;
+                visibility: visible;
             }
 
             .cofounder-slider-controls {
                 justify-content: center;
                 padding-top: 1rem;
+            }
+
+            /* Hide original prev/next buttons on mobile */
+            .cofounder-slider-controls .slider-nav {
+                display: none;
             }
         }
 
@@ -1440,8 +1500,12 @@
             <!-- Slide 1: Rayhan -->
             <div class="cofounder-slide active" data-index="0">
                 <div class="cofounder-slide-layout">
-                    <div class="cofounder-photo">
-                        <img src="images/siapa-bertumboost/rayhan.jpg" alt="Muhammad Rayhan Safhara">
+                    <div class="cofounder-photo-wrapper">
+                        <button class="swipe-button prev" aria-label="Previous">&#8592;</button>
+                        <div class="cofounder-photo">
+                            <img src="images/siapa-bertumboost/rayhan.jpg" alt="Muhammad Rayhan Safhara">
+                        </div>
+                        <button class="swipe-button next" aria-label="Next">&#8594;</button>
                     </div>
                     <div class="cofounder-info">
                         <p class="full-name">Muhammad Rayhan Safhara</p>
@@ -1455,8 +1519,12 @@
             <!-- Slide 2: Febri -->
             <div class="cofounder-slide" data-index="1">
                 <div class="cofounder-slide-layout">
-                    <div class="cofounder-photo">
-                        <img src="images/siapa-bertumboost/febri.jpg" alt="Febrianto Ramadhan">
+                    <div class="cofounder-photo-wrapper">
+                        <button class="swipe-button prev" aria-label="Previous">&#8592;</button>
+                        <div class="cofounder-photo">
+                            <img src="images/siapa-bertumboost/febri.jpg" alt="Febrianto Ramadhan">
+                        </div>
+                        <button class="swipe-button next" aria-label="Next">&#8594;</button>
                     </div>
                     <div class="cofounder-info">
                         <p class="full-name">Febrianto Ramadhan</p>
@@ -1470,8 +1538,12 @@
             <!-- Slide 3: Icha -->
             <div class="cofounder-slide" data-index="2">
                 <div class="cofounder-slide-layout">
-                    <div class="cofounder-photo">
-                        <img src="images/siapa-bertumboost/icha.jpg" alt="Annisa Rahmali Agustina">
+                    <div class="cofounder-photo-wrapper">
+                        <button class="swipe-button prev" aria-label="Previous">&#8592;</button>
+                        <div class="cofounder-photo">
+                            <img src="images/siapa-bertumboost/icha.jpg" alt="Annisa Rahmali Agustina">
+                        </div>
+                        <button class="swipe-button next" aria-label="Next">&#8594;</button>
                     </div>
                     <div class="cofounder-info">
                         <p class="full-name">Annisa Rahmali Agustina</p>
@@ -1485,8 +1557,12 @@
             <!-- Slide 4: Miwa -->
             <div class="cofounder-slide" data-index="3">
                 <div class="cofounder-slide-layout">
-                    <div class="cofounder-photo">
-                        <img src="images/siapa-bertumboost/miwa.jpg" alt="Faradila Cahya Miranti">
+                    <div class="cofounder-photo-wrapper">
+                        <button class="swipe-button prev" aria-label="Previous">&#8592;</button>
+                        <div class="cofounder-photo">
+                            <img src="images/siapa-bertumboost/miwa.jpg" alt="Faradila Cahya Miranti">
+                        </div>
+                        <button class="swipe-button next" aria-label="Next">&#8594;</button>
                     </div>
                     <div class="cofounder-info">
                         <p class="full-name">Faradila Cahya Miranti</p>
@@ -1500,8 +1576,12 @@
             <!-- Slide 5: Gilang -->
             <div class="cofounder-slide" data-index="4">
                 <div class="cofounder-slide-layout">
-                    <div class="cofounder-photo">
-                        <img src="images/siapa-bertumboost/gilang.jpg" alt="Gilang Ramadhan">
+                    <div class="cofounder-photo-wrapper">
+                        <button class="swipe-button prev" aria-label="Previous">&#8592;</button>
+                        <div class="cofounder-photo">
+                            <img src="images/siapa-bertumboost/gilang.jpg" alt="Gilang Ramadhan">
+                        </div>
+                        <button class="swipe-button next" aria-label="Next">&#8594;</button>
                     </div>
                     <div class="cofounder-info">
                         <p class="full-name">Gilang Ramadhan</p>
@@ -1515,8 +1595,12 @@
             <!-- Slide 6: Tata -->
             <div class="cofounder-slide" data-index="5">
                 <div class="cofounder-slide-layout">
-                    <div class="cofounder-photo">
-                        <img src="images/siapa-bertumboost/tata.jpg" alt="Ladita Arta Mella">
+                    <div class="cofounder-photo-wrapper">
+                        <button class="swipe-button prev" aria-label="Previous">&#8592;</button>
+                        <div class="cofounder-photo">
+                            <img src="images/siapa-bertumboost/tata.jpg" alt="Ladita Arta Mella">
+                        </div>
+                        <button class="swipe-button next" aria-label="Next">&#8594;</button>
                     </div>
                     <div class="cofounder-info">
                         <p class="full-name">Ladita Arta Mella</p>
@@ -2286,6 +2370,24 @@
 
         // Initialize
         updateActiveNavLink();
+
+        // Swipe Button Handlers for Cofounder Slider
+        document.querySelectorAll('.swipe-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Stop auto advance when user interacts with swipe buttons
+                stopAutoAdvance();
+
+                // Determine direction based on button class
+                if (this.classList.contains('prev')) {
+                    showSlide(currentSlide - 1);
+                } else if (this.classList.contains('next')) {
+                    showSlide(currentSlide + 1);
+                }
+
+                // Restart auto advance after interaction
+                startAutoAdvance();
+            });
+        });
     </script>
 </body>
 </html>
